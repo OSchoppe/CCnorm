@@ -1,0 +1,46 @@
+function [CC_norm, CC_abs, CC_max] = calc_CCnorm_jackknife(R,yhat)
+% function [CC_norm, CC_abs, CC_max] = calc_CCnorm_jackknife(R,yhat)
+% 
+% Get distributions of CC_norm, CC_abs, CC_max using jackknife
+% (i.e. excluding trials in turn, one at a time) in order to 
+% estimate the confidence intervals of each metric.
+%
+% Written by Ben Willmore (benjamin.willmore@dpag.ox.ac.uk), 2016
+
+
+% Check inputs
+[N, T] = size(R);  
+if(T<N), error('Please provide R as a NxT matrix.'); end
+if(numel(yhat) ~= T), error('The prediction yhat should have as many time bins as R.'); end
+yhat = yhat(:);
+y = mean(R,1)';
+
+CCnorm = nan(1, N);
+CCabs = nan(1, N);
+CCmax = nan(1, N);
+for ii = 1:N
+	idx = [1:ii-1 ii+1:N];
+	[CCnorm(ii) CCabs(ii) CCmax(ii)] = calc_CCnorm(R(idx,:),yhat);
+end
+
+CC_norm.values = CCnorm;
+CC_norm.median = median(CCnorm);
+if any(isnan(CCnorm))
+	CC_norm.percentile_5  = NaN;
+	CC_norm.percentile_95 = NaN;
+else
+	CC_norm.percentile_5  = prctile(CCnorm, 5);
+	CC_norm.percentile_95 = prctile(CCnorm, 95);
+end
+
+CC_abs.values = CCabs;
+CC_abs.median = median(CCabs);
+CC_abs.percentile_5  = prctile(CCabs, 5);
+CC_abs.percentile_95 = prctile(CCabs, 95);
+
+CC_max.values = CCmax;
+CC_max.median = median(CCmax);
+CC_max.percentile_5  = prctile(CCmax, 5);
+CC_max.percentile_95 = prctile(CCmax, 95);
+
+end

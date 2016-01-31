@@ -1,4 +1,4 @@
-function [CCnorm, CCabs] = calc_CCnorm(R,yhat)
+function [CCnorm, CCabs, CCmax] = calc_CCnorm(R,yhat)
 %function [CCnorm, CCabs] = calc_CCnorm(R,yhat)
 %
 % This function returns the absolute correlation coefficient CCabs and the
@@ -22,7 +22,7 @@ function [CCnorm, CCabs] = calc_CCnorm(R,yhat)
 % [1]:	Sahani, M. & Linden, J. F. "How linear are auditory cortical 
 %		responses?" In Becker, S., Thrun, S. & Obermayer, K. (eds.) 
 %		Advances in Neural Information Processing Systems 15, vol. 15, 
-%		109â€“116 (MIT Press, 2003). 
+%		109–116 (MIT Press, 2003). 
 
 % Check inputs
 [N, T] = size(R);  
@@ -43,7 +43,16 @@ SP		= (var(sum(R,1))-sum(var(R,[],2)))/(N*(N-1));
 
 % Calculate CC values
 CCabs	= Cyyhat/sqrt(Vy*Vyhat);
-CCnorm	= Cyyhat/sqrt(SP*Vyhat);	
-%CCmax	= sqrt(SP/Vy);
+CCnorm	= Cyyhat/sqrt(SP*Vyhat);
+CCmax	= sqrt(SP/Vy);
+
+if SP<=0
+	fprintf('Signal power estimate is negative or zero, so CCmax and CCnorm\n');
+	fprintf('cannot be calculated. This happens if the neural data is very\n');
+	fprintf('noisy, i.e. not driven by the stimulus at all.\n');
+	CCnorm = NaN;
+	CCmax  = 0;
+end
+
 
 end

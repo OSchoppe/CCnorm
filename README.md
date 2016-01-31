@@ -10,12 +10,12 @@ This repository contains Matlab code to calculate various performance measures f
 --> yhat should be a vector with T elements. It contains the predicted firing rate over time.
 
 
-There are three Matlab functions provided:
+There are four Matlab functions provided:
 
-[CCnorm, CCabs] = calc_CCnorm(R,yhat);
+[CCnorm, CCabs, CCmax] = calc_CCnorm(R,yhat);
+
+[CC_norm, CC_abs, CC_max] = calc_CCnorm_jackknife(R,yhat)
 
 [pMSE, MSE] = calc_pMSE(R,yhat);
 
 SPE = calc_SPE(R,yhat);
-
-

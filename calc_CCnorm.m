@@ -1,5 +1,5 @@
 function [CCnorm, CCabs, CCmax] = calc_CCnorm(R,yhat)
-%function [CCnorm, CCabs] = calc_CCnorm(R,yhat)
+%function [CCnorm, CCabs, CCmax] = calc_CCnorm(R,yhat)
 %
 % This function returns the absolute correlation coefficient CCabs and the
 % normalized correlation coefficient CCnorm. The normalization discounts

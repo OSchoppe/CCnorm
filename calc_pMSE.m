@@ -18,7 +18,7 @@ function [pMSE, MSE] = calc_pMSE(R,yhat)
 %		firing rate over time.
 %
 %
-% Written by Oliver Schoppe, 2015. (oliver.schoppe@tum.de)
+% Written by Oliver Schoppe, 2015. (oliver dot schoppe at tum dot de)
 
 % Check inputs
 [N, T] = size(R);  

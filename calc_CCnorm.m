@@ -16,7 +16,7 @@ function [CCnorm, CCabs, CCmax] = calc_CCnorm(R,yhat)
 %		firing rate over time.
 %
 %
-% Written by Oliver Schoppe, 2015. (oliver.schoppe@tum.de)
+% Written by Oliver Schoppe, 2015. (oliver dot schoppe at tum dot de)
 %
 % References:
 % [1]:	Sahani, M. & Linden, J. F. "How linear are auditory cortical 
